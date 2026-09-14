@@ -1,0 +1,22 @@
+# Indian Road Perception + Driving Recommendation System
+
+# --- core perception -------------------------------------------------------
+ultralytics>=8.3.0
+torch>=2.2.0
+torchvision>=0.17.0
+opencv-python>=4.9.0
+
+# --- numerics --------------------------------------------------------------
+numpy>=1.26.0
+scipy>=1.11.0
+
+# --- configuration and data ------------------------------------------------
+pydantic>=2.5.0
+PyYAML>=6.0
+pandas>=2.0.0
+
+# --- reporting -------------------------------------------------------------
+matplotlib>=3.8.0
+
+# --- testing ---------------------------------------------------------------
+pytest>=8.0.0

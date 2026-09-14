@@ -1,0 +1,92 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "indian-road-ai"
+version = "0.1.0"
+description = "Indian road perception and driving-recommendation research prototype"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+keywords = [
+    "computer-vision", "autonomous-driving", "perception", "yolo",
+    "object-tracking", "driver-assistance", "adas",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+]
+
+dependencies = [
+    "ultralytics>=8.3.0",
+    "torch>=2.2.0",
+    "torchvision>=0.17.0",
+    "opencv-python>=4.9.0",
+    "numpy>=1.26.0",
+    "scipy>=1.11.0",
+    "pydantic>=2.5.0",
+    "PyYAML>=6.0",
+    "pandas>=2.0.0",
+    "matplotlib>=3.8.0",
+]
+
+[project.optional-dependencies]
+tracking = ["supervision>=0.20.0"]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.4.0",
+    "mypy>=1.8.0",
+]
+
+[project.scripts]
+indian-road-ai = "main:main"
+
+[tool.setuptools]
+packages = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q --strict-markers"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "SIM", "RUF"]
+ignore = [
+    "E501",    # long lines are handled by the formatter
+    "B008",    # function calls in argument defaults (Pydantic Field)
+    "RUF012",  # mutable class attributes need ClassVar
+    # The codebase uses typing.Optional and quoted forward references
+    # consistently; these rules would churn every signature for no gain.
+    "UP045",   # Optional[X] -> X | None
+    "UP037",   # quoted annotations
+    "UP042",   # str, Enum -> StrEnum (needs 3.11+ only; kept for clarity)
+    "E402",    # scripts adjust sys.path before importing the package
+    "B027",    # optional hooks on ABCs are deliberately non-abstract
+    "N806",    # Kalman matrices keep their conventional names (K, S, P, F)
+    "RUF046",  # int(round(x)) is kept explicit for pixel coordinates
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]  # assert is the point of a test
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+check_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = ["ultralytics.*", "cv2.*", "supervision.*"]
+ignore_errors = true

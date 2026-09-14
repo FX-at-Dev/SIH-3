@@ -1,0 +1,173 @@
+# =============================================================================
+# Indian Road Perception + Driving Recommendation System
+# Default configuration.
+# =============================================================================
+
+app:
+  name: "Indian Road Autonomy Perception System"
+  window_title: "Indian Road Perception - Prototype"
+  process_width: 960
+  log_level: "INFO"
+
+detector:
+  type: "yolo"
+  model: "models/yolo11n.pt"
+  confidence: 0.35
+  iou: 0.45
+  imgsz: 640
+  device: "auto"
+  max_detections: 60
+  ignore_classes: ["tie", "frisbee", "kite", "sports ball", "book", "clock"]
+
+pothole:
+  enabled: true
+  type: "none"
+  model: "models/pothole.pt"
+  confidence: 0.30
+  heuristic:
+    min_area_ratio: 0.0008
+    max_area_ratio: 0.08
+    darkness_percentile: 12
+    min_solidity: 0.55
+    min_aspect: 0.35
+    max_aspect: 3.0
+  severity:
+    medium_width_m: 0.35
+    high_width_m: 0.70
+    high_overlap: 0.35
+
+drivable_area:
+  type: "heuristic"
+  horizon_ratio: 0.45
+
+tracking:
+  enabled: true
+  type: "kalman_iou"
+  max_age: 15
+  min_hits: 2
+  iou_threshold: 0.25
+  max_history: 30
+
+camera:
+  horizontal_fov_deg: 65.0
+  mount_height_m: 1.25
+  pitch_deg: 0.0
+  calibrated: false
+
+distance:
+  method: "hybrid"
+  min_distance_m: 0.8
+  max_distance_m: 120.0
+  smoothing: 0.55
+  object_dimensions:
+    person:        {height: 1.65, width: 0.50}
+    bicycle:       {height: 1.10, width: 0.60}
+    motorcycle:    {height: 1.30, width: 0.75}
+    auto_rickshaw: {height: 1.80, width: 1.40}
+    car:           {height: 1.50, width: 1.75}
+    bus:           {height: 3.20, width: 2.50}
+    truck:         {height: 3.20, width: 2.50}
+    cow:           {height: 1.40, width: 0.65}
+    bull:          {height: 1.50, width: 0.75}
+    dog:           {height: 0.55, width: 0.30}
+    horse:         {height: 1.60, width: 0.70}
+    bullock_cart:  {height: 1.80, width: 1.60}
+    pushcart:      {height: 1.30, width: 1.20}
+    traffic_cone:  {height: 0.55, width: 0.35}
+    traffic_light: {height: 0.90, width: 0.30}
+    traffic_sign:  {height: 0.75, width: 0.75}
+    pothole:       {height: 0.25, width: 0.60}
+    debris:        {height: 0.35, width: 0.50}
+    unknown:       {height: 1.50, width: 1.00}
+
+ego_path:
+  near_width: 0.52
+  far_width: 0.13
+  far_y: 0.52
+  lateral_offset: 0.0
+  vehicle_width_m: 1.8
+  lane_width_m: 3.2
+  nudge_clearance_m: 0.6
+
+prediction:
+  enabled: true
+  horizon_seconds: 3.0
+  timestep: 0.25
+  min_track_age: 3
+  static_speed_px: 6.0
+
+risk:
+  ttc:
+    medium: 5.0
+    high: 3.0
+    critical: 1.5
+    min_closing_speed: 0.25
+    max_valid_ttc: 60.0
+  distance:
+    medium: 25.0
+    high: 12.0
+    critical: 5.0
+  in_path_overlap: 0.12
+  blocking_overlap: 0.45
+  low_confidence: 0.45
+  density:
+    moderate: 6
+    dense: 11
+
+  priority:
+    VULNERABLE: 1.00
+    ANIMAL: 0.95
+    VEHICLE: 0.70
+    OBSTACLE: 0.60
+    STATIC: 0.30
+    UNKNOWN: 0.85
+
+  class_priority:
+    person: 1.00
+    cow: 0.98
+    bull: 0.98
+    dog: 0.90
+    motorcycle: 0.88
+    bicycle: 0.88
+    auto_rickshaw: 0.80
+    bullock_cart: 0.85
+    truck: 0.80
+    bus: 0.80
+    car: 0.72
+    pothole: 0.65
+    debris: 0.50
+    unknown: 0.85
+
+decision:
+  cruise_speed_kmh: 30.0
+  nudge_speed_kmh: 18.0
+  yield_speed_kmh: 12.0
+  creep_speed_kmh: 5.0
+  hysteresis_frames: 3
+  immediate_escalation: true
+  nudge_margin: 0.15
+  min_cruise_confidence: 0.50
+
+visualization:
+  enabled: true
+  show_detections: true
+  show_details: true
+  show_trajectories: true
+  show_ego_path: true
+  show_dashboard: true
+  panel_width: 360
+  font_scale: 0.5
+  box_thickness:
+    LOW: 1
+    MEDIUM: 2
+    HIGH: 3
+    CRITICAL: 4
+
+output:
+  results_dir: "results"
+  save_video: false
+  save_events: true
+  save_detections: true
+  save_recommendations: true
+  save_screenshots: true
+  video_fps: 20.0

@@ -1,0 +1,46 @@
+# Model weights: large binaries, distributed outside git.
+*.pt
+*.pth
+*.onnx
+*.engine
+*.tflite
+!models/README.md
+
+# Session output
+results/
+runs/
+
+# Media: sample footage is not committed.
+data/**/*.mp4
+data/**/*.avi
+data/**/*.mov
+data/**/*.mkv
+data/**/*.jpg
+data/**/*.jpeg
+data/**/*.png
+data/**/*.webp
+!data/**/.gitkeep
+!data/**/README.md
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
