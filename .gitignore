@@ -22,6 +22,9 @@ data/**/*.webp
 !data/**/.gitkeep
 !data/**/README.md
 
+# Large video files
+*.mp4
+
 # Python
 __pycache__/
 *.py[cod]

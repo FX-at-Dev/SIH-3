@@ -2,7 +2,7 @@
 """Indian Road Perception + Driving Recommendation System - CLI entry point.
 
     python main.py --source camera
-    python main.py --source camera --camera-id 1
+    python main.py --source camera --camera-id 2
     python main.py --source video  --input data/videos/test.mp4
     python main.py --source image  --input data/images/test.jpg --save
     python main.py --source video  --input data/videos/test.mp4 --save-results
@@ -63,7 +63,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     source.add_argument("--input", type=str, help="Path to a video or image file.")
     source.add_argument(
-        "--camera-id", type=int, default=0, help="Camera device index (default: 0)."
+        "--camera-id", type=int, default=2, help="Camera device index (default: 0)."
     )
     source.add_argument(
         "--loop", action="store_true", help="Loop a video file continuously."

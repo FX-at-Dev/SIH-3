@@ -20,7 +20,7 @@ from typing import Any, Optional
 __all__ = [
     "ActionType",
     "BBox",
-    "Detection",
+    "Detection", 
     "DetectionSource",
     "Direction",
     "DrivingRecommendation",
